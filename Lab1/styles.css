@@ -1,0 +1,40 @@
+h1 {
+    color: rgb(2, 75, 44);
+    font-family:'Times New Roman', Times, serif;
+}
+
+h3 {
+    color: rgb(18, 73, 87) ;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h5{
+    font-family:'Courier New', Courier, monospace;;
+}
+
+img {
+    border-radius: 50%;
+}
+
+p {
+    color: rgb(4, 4, 36);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+  background-image: url('https://i.pinimg.com/736x/e5/15/29/e515291e987043d662b474fa477ef1bd.jpg');
+  background-size: cover;
+}
+
+ol {
+    color: rgb(4, 4, 36);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+ul {
+    color: rgb(4, 4, 36);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
