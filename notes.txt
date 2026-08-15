@@ -1,0 +1,17 @@
+THINGS I LEARNED IN THIS COMMIT:
+
+git clone -b <branch_name> --single-commit <branch_URL>
+    - clones a specific branch into the local machine (Git 1.17.10+ version)
+
+ /Applications vs ~/Applications
+    - the former includes all the apps installed by the user, the latter only displays the games I installed for some reason?? 
+    - /App displays all the apps that are usable to other accounts while ~/App shows what is available only to my account
+
+vscode > f1, command palette > type 'shell' > select install 'code' command in PATH
+    - enables the 'code .' command in the terminal
+
+https://code.visualstudio.com/docs/languages/php
+   - found out my vscode's PHP executablePath had nothing on it which prevented my from running my .php files </3
+
+highlight > command+D
+   - multicursor feature
