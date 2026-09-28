@@ -3,11 +3,11 @@ session_start();
 
 include("db.php");
 
+$errorMessage = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
         $username = $_POST["username"]; 
         $password = $_POST["password"];
-        $confirmPassword = $_POST['confirm_password'];
 
         $sql = "SELECT `username` FROM `users` WHERE `username` = '$username'";
         $result = $conn->query($sql);
@@ -18,7 +18,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if (password_verify($password, $user['password'])){
                 $_SESSION['username'] = $username;
                 header("Location: dashboard.php");
-            }
+            } else {
+                $errorMessage = "Invalid Credentials";
         }
 ?>
 
@@ -28,7 +29,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login System</title>
 </head>
 <body>
     <h3>LOGIN SYSTEM</h3>
@@ -44,16 +45,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <label for="Confirm Password">Confirm Your Password<br> 
             <input type="password" placeholder="Confirm Password" name="confirm_password">
         </label><br><br>
-        <button type="submit">Register</button>
+        <button type="submit">Register</button><br><br>
     </form>
 
     <!-- error display -->
     <p style="color: red;">
         <?php  
-            foreach($errors as $error){
-                echo $error . "<br>";
-            }
-            
+        echo $errorMessage;
         ?>
     </p>
 </body>

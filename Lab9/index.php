@@ -29,6 +29,7 @@
             $errors[] = "Username already exists.";
         }
 
+        // CONFIRM PASSWORD
         if($password != $confirmPassword){
             $errors[] = "Password did not match.";
         }

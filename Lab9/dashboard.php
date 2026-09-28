@@ -39,6 +39,7 @@ if(!isset($_SESSION['username'])){
     <button type="button">
         <a href="logout.php">Logout</a>
     </button>
+    <a href="edit.php">Edit Profile</a>
     
 </body>
 </html>
