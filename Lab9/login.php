@@ -6,21 +6,23 @@ include("db.php");
 $errorMessage = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $username = $_POST["username"]; 
-        $password = $_POST["password"];
+        $username = $_POST['username']; 
+        $password = $_POST['password'];
 
-        $sql = "SELECT `username` FROM `users` WHERE `username` = '$username'";
-        $result = $conn->query($sql);
+        $result = pg_query_params($conn, 'SELECT * FROM users WHERE username = $1',
+        [$username]);
+        $user = pg_fetch_assoc($result);
 
-        if($result->num_rows == 1){
-            $user = mysqli_fetch_assoc($result);
+        if($user){
 
             if (password_verify($password, $user['password'])){
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = $user['username'];
                 header("Location: dashboard.php");
             } else {
                 $errorMessage = "Invalid Credentials";
         }
+    }
+}
 ?>
 
 
