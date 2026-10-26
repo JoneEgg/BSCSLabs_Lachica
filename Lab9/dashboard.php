@@ -36,9 +36,11 @@ if(!isset($_SESSION['username'])){
     
     ?>
 
+    <br>
     <button type="button">
         <a href="logout.php">Logout</a>
     </button>
+    <br><br>
     <a href="edit.php">Edit Profile</a>
     
 </body>

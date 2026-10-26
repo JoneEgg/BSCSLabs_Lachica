@@ -1,4 +1,4 @@
-THINGS I LEARNED IN THIS COMMIT:
+THINGS I LEARNED:
 
 git clone -b <branch_name> --single-commit <branch_URL>
     - clones a specific branch into the local machine (Git 1.17.10+ version)
@@ -15,3 +15,7 @@ https://code.visualstudio.com/docs/languages/php
 
 highlight > command+D
    - multicursor feature
+
+------------
+
+Connecting my code to my supabase.

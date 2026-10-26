@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <label for="Confirm Password">Confirm Your Password<br> 
             <input type="password" placeholder="Confirm Password" name="confirm_password">
         </label><br><br>
-        <button type="submit">Register</button><br><br>
+        <button type="submit">Login</button><br><br>
     </form>
 
     <!-- error display -->
