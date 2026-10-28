@@ -4,7 +4,7 @@ $dbuser = 'postgres.zygwumbvummjpudsazcd';
 $dbpass = 'LoginSystem@2026';
 
 
-$conn = pg_connect("host=$dbhost port=5432 dbname=postgres user=$dbuser password=$dbpass sslmode=require");
+$conn = mysqli_connect("host=$dbhost port=5432 dbname=postgres user=$dbuser password=$dbpass sslmode=require");
 
 if (!$conn){
     exit('Database connection failed.');

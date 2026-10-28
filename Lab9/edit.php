@@ -1,22 +1,23 @@
 <?php 
 
-include('db.php');
+include("dp.php");
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD']=='POST'){
     $gender = $_POST['gender'];
-    $phone_number = $_POST['phone_number'];
+    $address = trim($_POST['address']);
+    $phone_number = trim( $_POST['phone_number']);
 
-    if ($phone_number > 11 OR $phone_number < 11){
+    if (strlen($phone_number) != 11){
         $errors[] = "Phone number must 11 numbers long.";
     }
     
     if (empty($errors)){
-        pg_query_params(
+        mysqli_query(
             $conn,
-            'UPDATE users SET gender = $1, phone_number = $2 WHERE ',
-            [$gender, $phone_number]
+            "UPDATE users SET gender = '$gender', phone_number = '$phone_number', address = '$address' WHERE username = '$_SESSION['username']'",
+    
         );
 
         echo "Updated Successfully";
@@ -37,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     <h3>Welcome, <?php echo $_SESSION['username'] ?>!</h3>
 
     <form method="POST">
+
+    <label for="address">Address</label>
+    <input type="text" name="address">
+    <br><br>
+
         <label for="gender">Gender</label>
         <select name="gender">
             <option value="male">Male</option>
@@ -45,10 +51,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
         </select>
         <br><br>
 
-        <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
-
         <label for="phone_number">Phone Number</label>
-        <input type="text" name="phone_number">
+        <input type="number" name="phone_number">
         <br><br>
 
         <button type="submit">Save</button>

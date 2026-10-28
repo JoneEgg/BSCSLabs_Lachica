@@ -6,6 +6,9 @@ $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $username = $_POST['username'];
+    $gender = $_POST['gender'];
+    $address = trim($_POST['address']);
+    $phone_number = trim( $_POST['phone_number']);
     $password = $_POST['password'];
     $confirmPassword = $_POST['confirm_password'];
 
@@ -23,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     // " ynzon salas "
 
-    $result = pg_query_params($conn, 'SELECT username FROM users WHERE username = $1', [$username]);
+    $result = mysqli_query($conn, 'SELECT username FROM users WHERE username = $1', $username);
 
-    if (pg_fetch_assoc($result)) {
+    if (mysqli_fetch_assoc($result)) {
         $errors[] = "Username already exist";
     }
 
@@ -50,10 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $passwordHash = password_hash($password, PASSWORD_BCRYPT);
 
     if (empty($errors)) {
-        pg_query_params(
+        mysqli_query(
             $conn,
-            'INSERT INTO users (username, password) VALUES ($1, $2)',
-            [$username, $passwordHash]
+            "INSERT INTO users (username, password, gender, address, phone_number) VALUES '$username', '$passwordHash', '$address', '$gender', '$phone_number'"
         );
 
         echo "Registered Successfully";
@@ -77,12 +79,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <label for="username">Username:</label>
         <input type="text" name="username" value="<?php echo (isset($_POST['username'])) ? $_POST['username'] : ""; ?>">
         <br><br>
+        <label for="phone_number">Phone Number</label>
+        <input type="number" name="phone_number">
+        <br><br>
+        <label for="address">Address</label>
+        <input type="text" name="address">
+        <br><br>
+        <br><br>
+        <label for="address">Address</label>
+        <select name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="non">Rather Not Say</option>
+        </select>
+        <br><br>
         <label for="password">Password:
         <input type="password" name="password">
         <br><br>
         <label for="confirm password">Confirm Password:
         <input type="password" name="confirm_password">
         <br><br>
+      
         <button type="submit">Register</button>
     </form>
     <br><br>
