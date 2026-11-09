@@ -1,116 +1,60 @@
 <?php
+session_start();
 
-include('db.php');
+include("db.php");
 
-$errors = [];
+$errorMessage = "";
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $username = $_POST['username'];
-    $gender = $_POST['gender'];
-    $address = trim($_POST['address']);
-    $phone_number = trim( $_POST['phone_number']);
-    $password = $_POST['password'];
-    $confirmPassword = $_POST['confirm_password'];
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $username = $_POST['username']; 
+        $password = $_POST['password'];
 
-    if (empty($username)) {
-        $errors[] = "Username is required";
-    } else if (strlen($username) < 8) {
-        $errors[] = "Username must be 8 characters or more";
-    }
+        $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+        $user = mysqli_fetch_assoc($result);
 
-    $usernamePattern = '/^(?=.*[\S])(?=.*[\s]).+$/';
+        if($user){
 
-    if (preg_match($usernamePattern, $username)) {
-        $errors[] = "Username must not have white space";
-    }
-
-    // " ynzon salas "
-
-    $result = mysqli_query($conn, 'SELECT username FROM users WHERE username = $1', $username);
-
-    if (mysqli_fetch_assoc($result)) {
-        $errors[] = "Username already exist";
-    }
-
-    if ($password != $confirmPassword) {
-        $errors[] = "Password did not match";
-    }
-
-    if (empty($password) || empty($confirmPassword)) {
-        $errors[] = "Please provide a passsword";
-    }
-
-    $pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\W_]).+$/';
-
-    if (!preg_match($pattern, $password)) {
-        $errors[] = "password must contain lower, upper case and special characters";
-    }
-
-    if (strlen($password) < 8) {
-        $errors[] = "password must be 8 or more characters long";
-    }
-
-    $passwordHash = password_hash($password, PASSWORD_BCRYPT);
-
-    if (empty($errors)) {
-        mysqli_query(
-            $conn,
-            "INSERT INTO users (username, password, gender, address, phone_number) VALUES '$username', '$passwordHash', '$address', '$gender', '$phone_number'"
-        );
-
-        echo "Registered Successfully";
+            if (password_verify($password, $user['password'])){
+                $_SESSION['username'] = $user['username'];
+                header("Location: dashboard.php");
+            } else {
+                $errorMessage = "Invalid Credentials";
+        }
     }
 }
-
-
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login System</title>
 </head>
-
 <body>
+    <h3>LOGIN SYSTEM</h3>
+
+    <!-- login form -->
     <form method="POST">
-        <label for="username">Username:</label>
-        <input type="text" name="username" value="<?php echo (isset($_POST['username'])) ? $_POST['username'] : ""; ?>">
-        <br><br>
-        <label for="phone_number">Phone Number</label>
-        <input type="number" name="phone_number">
-        <br><br>
-        <label for="address">Address</label>
-        <input type="text" name="address">
-        <br><br>
-        <br><br>
-        <label for="address">Address</label>
-        <select name="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="non">Rather Not Say</option>
-        </select>
-        <br><br>
-        <label for="password">Password:
-        <input type="password" name="password">
-        <br><br>
-        <label for="confirm password">Confirm Password:
-        <input type="password" name="confirm_password">
-        <br><br>
-      
-        <button type="submit">Register</button>
+        <label for="username">Enter Username<br>
+            <input type="text" placeholder="Username" name="username" required>
+        </label><br><br>
+        <label for="password">Enter Password<br> 
+            <input type="password" placeholder="Password" name="password">
+        </label><br><br>
+        <label for="Confirm Password">Confirm Your Password<br> 
+            <input type="password" placeholder="Confirm Password" name="confirm_password">
+        </label><br><br>
+        <button type="submit">Login</button><br><br>
+        <a href="register.php">Register</a>
     </form>
-    <br><br>
-    <a href="login.php">Login</a>
-    <?php
 
-    foreach ($errors as $error) {
-        echo $error . "<br>";
-    }
-
-    ?>
+    <!-- error display -->
+    <p style="color: red;">
+        <?php  
+        echo $errorMessage;
+        ?>
+    </p>
 </body>
-
 </html>

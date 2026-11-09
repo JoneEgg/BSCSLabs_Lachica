@@ -1,10 +1,11 @@
 <?php
-$dbhost = 'aws-0-ap-south-1.pooler.supabase.com';
-$dbuser = 'postgres.zygwumbvummjpudsazcd';
-$dbpass = 'LoginSystem@2026';
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$dbname = 'login_db';
 
 
-$conn = mysqli_connect("host=$dbhost port=5432 dbname=postgres user=$dbuser password=$dbpass sslmode=require");
+$conn = mysqli_connect($host, $user, $pass, $dbname);
 
 if (!$conn){
     exit('Database connection failed.');

@@ -1,6 +1,10 @@
 <?php 
 
-include("dp.php");
+include("db.php");
+
+$username = $_SESSION['username'];
+$result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+$user = mysqli_fetch_assoc($result);
 
 $errors = [];
 
@@ -16,8 +20,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
     if (empty($errors)){
         mysqli_query(
             $conn,
-            "UPDATE users SET gender = '$gender', phone_number = '$phone_number', address = '$address' WHERE username = '$_SESSION['username']'",
-    
+            "UPDATE users SET gender = '$gender', phone_number = '$phone_number', address = '$address' WHERE username = '$username'"
         );
 
         echo "Updated Successfully";

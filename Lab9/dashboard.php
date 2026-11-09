@@ -16,23 +16,23 @@ if(!isset($_SESSION['username'])){
     <title>Welcome!</title>
 </head>
 <body>
-    <h2>Hello, <?php echo $_SESSION['username'] ?>!</h2>
+    <h2>Hello, <?php echo $_SESSION['username'] ?>, <?php echo $_SESSION['id'] ?>!</h2>
     <p>You have successfully logged in.</p>
 
     <?php 
-    $testHash = "testing";
-    echo "This is password has: ". password_hash($testHash, PASSWORD_DEFAULT);;
-    echo "<br>";
-    echo "This is MD5: ". md5($testHash);
-    echo "<br>";
-    echo "This is SHA1: ". sha1($testHash);
-    echo "<br>";
-    echo "This is SHA1: ". sha1(md5($testHash));
-    echo "<br>";
+    // $testHash = "testing";
+    // echo "This is password has: ". password_hash($testHash, PASSWORD_DEFAULT);;
+    // echo "<br>";
+    // echo "This is MD5: ". md5($testHash);
+    // echo "<br>";
+    // echo "This is SHA1: ". sha1($testHash);
+    // echo "<br>";
+    // echo "This is SHA1: ". sha1(md5($testHash));
+    // echo "<br>";
 
-    $mySalt = "vilativay";
-    echo "This MYSALT: ". $mySalt.sha1(md5($testHash));
-    echo "<br>";
+    // $mySalt = "vilativay";
+    // echo "This MYSALT: ". $mySalt.sha1(md5($testHash));
+    // echo "<br>";
     
     ?>
 
@@ -41,7 +41,7 @@ if(!isset($_SESSION['username'])){
         <a href="logout.php">Logout</a>
     </button>
     <br><br>
-    <a href="edit.php">Edit Profile</a>
+    <a href="edit.php">Edit Profile</a> | <a href="delete.php">Delete Profile</a>
     
 </body>
 </html>
