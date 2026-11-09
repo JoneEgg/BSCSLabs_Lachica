@@ -16,6 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
             if (password_verify($password, $user['password'])){
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['id'] = $user['id'];
                 header("Location: dashboard.php");
             } else {
                 $errorMessage = "Invalid Credentials";
